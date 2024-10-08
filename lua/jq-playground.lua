@@ -105,13 +105,21 @@ local function start_jq_buffers(opts)
   local output_json_bufnr = create_output_buffer(opts.output_window)
   local query_bufnr = create_query_buffer(opts.query_window)
 
-  vim.keymap.set("n", "<CR>", function()
+  local run_jq_query = function()
     run_query(opts.filename or input_json_bufnr, query_bufnr, output_json_bufnr)
-  end, {
+  end;
+  local run_jq_query_opts = {
     buffer = query_bufnr,
     silent = true,
     desc = "Run current jq query",
-  })
+  }
+  if not opts.disable_default_mapping then
+    vim.keymap.set("n", "<CR>", run_jq_query, run_jq_query_opts);
+  end
+  print(vim.inspect(opts.run_query_mappings))
+  for _, mapping in ipairs(opts.run_query_mappings) do
+    vim.keymap.set(mapping[1], mapping[2], run_jq_query, run_jq_query_opts);
+  end
 end
 
 function M.setup(opts)
@@ -126,10 +134,12 @@ function M.setup(opts)
       width = nil,
       height = 0.3,
     },
+    disable_default_mapping = false,
+    run_query_mappings = {},
   }
 
   -- overwrite default options
-  local options = vim.tbl_extend("force", defaults, opts)
+  local options = vim.tbl_deep_extend("force", defaults, opts)
 
   vim.api.nvim_create_user_command("JqPlayground", function(params)
     -- also possible to use jq-playground without a source buffer

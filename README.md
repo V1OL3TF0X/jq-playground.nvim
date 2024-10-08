@@ -42,6 +42,8 @@ require("jq-playground").setup({
     width = nil,
     height = 0.3,
   },
+  disable_default_mapping = false,
+  run_query_mappings = {},
 })
 ```
 
@@ -52,6 +54,9 @@ require("jq-playground").setup({
   - `nil`: use the default (half of current width/height)
   - `0-1`: percentage of current width/height
   - `>1`: absolute width/height in number of characters or lines
+- `disable_default_mapping`: wether the default mapping for refreshing the results should be disabled.
+- `run_query_mappings`: additional mappings to refresh the buffer. Should be given in the form of `{ "mode_str", "<command>"}`.
+    Ex. `{ "i", "<C-E>" }`
 
 ## `:JqPlayground`
 
