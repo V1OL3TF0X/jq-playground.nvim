@@ -46,8 +46,9 @@ require("jq-playground").setup({
     width = nil,
     height = 0.3,
   },
-  disable_default_mapping = false,
-  run_query_mappings = {},
+  query_keymaps = {
+    { "n", "<CR>" },
+  },
 })
 ```
 
@@ -58,15 +59,14 @@ require("jq-playground").setup({
   - `nil`: use the default (half of current width/height)
   - `0-1`: percentage of current width/height
   - `>1`: absolute width/height in number of characters or lines
-- `disable_default_mapping`: wether the default mapping for refreshing the results should be disabled.
-- `run_query_mappings`: additional mappings to refresh the buffer. Should be given in the form of `{ "mode_str", "<command>"}`.
-    Ex. `{ "i", "<C-E>" }`
+- `query_keymaps`: keymaps to refresh the output buffer. Should be given in the form of `{ "mode_str", "<command>" }`.
+    Ex. `{ "i", "<C-E>" }`. Changing this setting will override the default keymap (<CR> in normal mode).
 
 ## `:JqPlayground`
 
 Navigate to a JSON file, and execute the command `:JqPlayground`. Two scratch
 buffers will be opened: a buffer for the JQ-filter and one for displaying the
-results. Simply press `<CR>` (enter) in the filter window to refresh the
+results. Simply press `<CR>` (enter), or your keymap from setup in the filter window to refresh the
 results buffer.
 
 You can also provide a filename to the `:JqPlayground` command. This is useful

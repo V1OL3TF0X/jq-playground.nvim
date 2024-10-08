@@ -78,7 +78,7 @@ local function create_query_buffer(winopts)
   vim.cmd.startinsert()
 
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {
-    "# JQ filter: press <CR> in normal mode to execute.",
+    "# JQ filter: press set keymap (default <CR> in normal mode) to execute.",
     "",
     "",
   })
@@ -113,10 +113,7 @@ local function start_jq_buffers(opts)
     silent = true,
     desc = "Run current jq query",
   }
-  if not opts.disable_default_mapping then
-    vim.keymap.set("n", "<CR>", run_jq_query, run_jq_query_opts);
-  end
-  for _, mapping in ipairs(opts.run_query_mappings) do
+  for _, mapping in ipairs(opts.query_keymaps) do
     vim.keymap.set(mapping[1], mapping[2], run_jq_query, run_jq_query_opts);
   end
 end
@@ -133,8 +130,9 @@ function M.setup(opts)
       width = nil,
       height = 0.3,
     },
-    disable_default_mapping = false,
-    run_query_mappings = {},
+    query_keymaps = {
+      { "n", "<CR>" }
+    },
   }
 
   -- overwrite default options
