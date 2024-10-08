@@ -116,7 +116,6 @@ local function start_jq_buffers(opts)
   if not opts.disable_default_mapping then
     vim.keymap.set("n", "<CR>", run_jq_query, run_jq_query_opts);
   end
-  print(vim.inspect(opts.run_query_mappings))
   for _, mapping in ipairs(opts.run_query_mappings) do
     vim.keymap.set(mapping[1], mapping[2], run_jq_query, run_jq_query_opts);
   end
