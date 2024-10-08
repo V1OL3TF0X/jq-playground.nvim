@@ -59,8 +59,7 @@ require("jq-playground").setup({
   - `nil`: use the default (half of current width/height)
   - `0-1`: percentage of current width/height
   - `>1`: absolute width/height in number of characters or lines
-- `query_keymaps`: keymaps to refresh the output buffer. Should be given in the form of `{ "mode_str", "<command>" }`.
-    Ex. `{ "i", "<C-E>" }`. Changing this setting will override the default keymap (<CR> in normal mode).
+- `query_keymaps`: keymaps to refresh the output buffer. Should be given as a table of first two arguments for `vim.keymap.set`. Changing this setting will override the default keymap (<CR> in normal mode).
 
 ## `:JqPlayground`
 
